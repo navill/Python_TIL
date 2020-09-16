@@ -2,6 +2,8 @@ import collections
 import contextlib
 
 # ----------- index & slice ----------------
+from datetime import timedelta, date
+
 my_numbers = (1, 2, 3, 4, 5, 6)
 print(my_numbers[2:5])  # (3, 4, 5)
 
@@ -138,3 +140,43 @@ Can't set test@test as it's not a valid email
 Can't set testtest.com as it's not a valid email
 Can't set testtestcom as it's not a valid email
 """
+
+
+# ----------- iterable ----------------
+
+class DateRangeIterable:
+    def __init__(self, start_date, end_date):
+        self.start_date = start_date
+        self.end_date = end_date
+        self._present_day = start_date
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self._present_day >= self.end_date:
+            raise StopIteration  # 반복의 마지막을 알리기 위해 반드시 StopIteration 필요
+        today = self._present_day
+        self._present_day += timedelta(days=1)
+        return today
+
+r = DateRangeIterable(date(2020, 9, 16), date(2020, 9, 20))
+print(", ".join(map(str, r)))
+print(", ".join(map(str, r)))
+
+class DateRangeContainerIterable:
+    def __init__(self, start_date, end_date):
+        self.start_date = start_date
+        self.end_date = end_date
+
+    def __iter__(self):
+        current_day = self.start_date
+        while current_day < self.end_date:
+            yield current_day
+            current_day += timedelta(days=1)
+
+
+print(1)
+r1 = DateRangeContainerIterable(date(2020, 9, 16), date(2020, 9, 20))
+print(", ".join(map(str, r1)))
+print(", ".join(map(str, r1)))

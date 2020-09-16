@@ -134,7 +134,7 @@ start backup
 start db
 ```
 
-- @contextlib.contextmanager를 사용하는 함수는 반드시 제너레이터(yield)
+- @contextlib.contextmanager를 사용하는 함수는 반드시 제너레이터(yield)여야 한다.
 
 - yield를 기준으로 enter와 exit로 구분된다.
 
@@ -167,7 +167,7 @@ start db
   1  # stop_db()의 결과값
   ```
 
-  - enter 메서드와 동일하게 **yield** 전의 결과값을 **... as x** 변수에 전달하여 context manager의 결과값으로 사용할 수 있다. 
+  - enter 메서드와 동일하게 **yield** 전의 결과값을 **... as x** 변수에 전달하여 context manager의 결과값(stop_db의 결과)으로 사용할 수 있다. 
 
 **ContextDecorator - 원본 함수를 래핑하는 데코레이터**
 
@@ -252,4 +252,113 @@ def offline_backup():
 - Property는 명령-쿼리 분리 원칙([Command and query seperation]([https://en.wikipedia.org/wiki/Command%E2%80%93query_separation](https://en.wikipedia.org/wiki/Command–query_separation)) 또는 CQRS 원칙)을 준수하기 좋은 방법
 
   - 객체의 메서드가 상태를 변경하는 작업(set) 또는 값을 반환하는 작업(get) 둘 중 하나만 수행해야한다.
+
+# Iterable
+
+- iterable은 iter 매직 메서드를 구현한 객체를 의미한다.
+
+- iterator는 next 매직 매직 메서드를 구현한 객체를 의미한다.
+
+- Iterable protocol
+
+  - 객체가 next나 iter(self(자신)를 반환) 매직 메서드 중 하나를 포함하는지 여부
+
+  - 객체가 시퀀스이고, len과 getitem 매직 메서드를 모두 가졌는지 여부
+
+    **두 조건 중 하나라도 True 일 경우 iterable 객체로 판단한다.**
+
+  ```python
+  class DateRangeIterable:
+      def __init__(self, start_date, end_date):
+          self.start_date = start_date
+          self.end_date = end_date
+          self._present_day = start_date
+  
+      def __iter__(self):
+          return self
+  
+      def __next__(self):
+          if self._present_day >= self.end_date:
+              raise StopIteration  # 반복의 마지막을 알리기 위해 반드시 StopIteration 필요
+          today = self._present_day
+          self._present_day += timedelta(days=1)
+          return today
+        
+        
+  for day in DateRangeIterable(date(2020, 9, 16), date(2020, 9, 20)):
+      print(day)    
+  # output
+  2020-09-16
+  2020-09-17
+  2020-09-18
+  2020-09-19
+  ```
+
+  1. for 문에서 iter() 함수 호출
+  2.  \_\_iter\_\_ 매직 메서드 호출 
+  3. self를 반환하면서 자신이 iterable 객체임을 알림 
+  4. 다음 반복이 실행되면서 next()함수 호출 
+  5.  \_\_next\_\_ 매직 메서드를 호출하면서 값 반환 
+  6. 4~5 과정이 반복되면서 for 문이 진행
+  7. if 조건(요소의 마지막)이 True가 되면서 StopIteration을 일으키고 반복문 종료
+
+
+
+- 위 코드는 한 개의 이터러블 객체가 한 개의 반복문만 실행할 수 있다는 단점을 갖는다.
+
+  - 첫 번째 반복문이 완료되면 마지막에 StopIteration이 호출되면서 객체는 더 이상 반환할 값이 없어진다.
+
+  - 두 번째 반복문에서 실행할 값이 없다(empty)
+
+    ```python 
+    r = DateRangeIterable(date(2020, 9, 16), date(2020, 9, 20))
+    print(", ".join(map(str, r)))  # 2020-09-16, 2020-09-17, 2020-09-18, 2020-09-19
+    print(", ".join(map(str, r)))  # None
+    ```
+
+    
+
+- 이를 보완하기 위해 제너레이터를 이용한 **컨테이너 이터러블**을 사용할 수 있다(지향)
+
+  ```python
+  class DateRangeContainerIterable:
+      def __init__(self, start_date, end_date):
+          self.start_date = start_date
+          self.end_date = end_date
+  
+      def __iter__(self):
+          current_day = self.start_date
+          while current_day < self.end_date:
+              yield current_day
+              current_day += timedelta(days=1)
+              
+  r1 = DateRangeContainerIterable(date(2020, 9, 16), date(2020, 9, 20))
+  print(", ".join(map(str, r1)))  # 2020-09-16, 2020-09-17, 2020-09-18, 2020-09-19
+  print(", ".join(map(str, r1)))  # 2020-09-16, 2020-09-17, 2020-09-18, 2020-09-19
+  ```
+
+  - **첫 번째 예제**는 객체 자신을 반환하고 객체 내의 next를 호출 -> 객체는 next 매직 메서드에서 생성된 값을 반환
+  - next 매직 메서드의 (반복문이 완료되어 raise StopIteration)상태를 유지하고 있기 때문에 두 번째 반복문에서 반환할 값이 없음
+  - **두 번째 예제**는 객체 자신이 아닌 제너레이터(yield가 포함된 함수)를 반환. 객체는 start_date와 end_date 값을 유지한 상태
+  - 첫 번째 반복문이 끝나고 두 번째 반복문에서 객체가 가지고 있는 start_date와 end_date를 이용해 제너레이터에서 값을 생성할 수 있음 -> 여러 반복문을 문제없이 수행할 수 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
