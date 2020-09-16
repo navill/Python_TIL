@@ -160,9 +160,11 @@ class DateRangeIterable:
         self._present_day += timedelta(days=1)
         return today
 
+
 r = DateRangeIterable(date(2020, 9, 16), date(2020, 9, 20))
 print(", ".join(map(str, r)))
 print(", ".join(map(str, r)))
+
 
 class DateRangeContainerIterable:
     def __init__(self, start_date, end_date):
