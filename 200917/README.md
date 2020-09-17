@@ -1,3 +1,21 @@
+# 200917
+
+- [Sequence](#sequence)
+- [Container](#container)
+- [객체의 동적인 속성](#객체의-동적인-속성__getattr__)
+- [callable](#callable)
+- [파이썬에서 유의할 점](#파이썬에서-유의할-점)
+
+- [계약에 의한 디자인](#계약에-의한-디자인)
+
+- [파이썬스러운 계약](#파이썬스러운-계약)
+
+- [방어적 프로그래밍](#방어적-프로그래밍)
+
+
+
+
+
 # Sequence
 
 - Sequence는 **len**과 **getitem** 매직 메서드가 구현된 객체를 의미([자체 시퀀스 생성]([https://github.com/navill/Python_TIL/tree/master/200916#%EC%9E%90%EC%B2%B4-%EC%8B%9C%ED%80%80%EC%8A%A4-%EC%83%9D%EC%84%B1](https://github.com/navill/Python_TIL/tree/master/200916#자체-시퀀스-생성)) 참고) 

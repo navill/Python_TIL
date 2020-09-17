@@ -1,4 +1,16 @@
-# index & slice
+# 200916
+
+- [Index & Slice](#index--slice)
+
+- [Contaxt Manager](#context-manager)
+
+- [Property](#property)
+
+- [Iterable](#iterable)
+
+  
+
+# Index & Slice
 
 ```python
 my_numbers = (1, 2, 3, 4, 5, 6)
