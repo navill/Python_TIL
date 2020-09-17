@@ -447,7 +447,7 @@ mark_coordinate(g, [3, 3])  # Mark:1
   ```
 
   - deliver_event() 메서드는 이벤트를 전달하는 기능을 담당하고, 연결(connect_with_retry)과 전송(send)에서 각각의 에러를 처리한다.
-    - 개인적인 생각: event.decode()에서 발생하는 에러(ValueError)는 Event.decode 메서드에서 처리하는게 맞지 않을까 생각함
+    - 개인적인 생각: event.decode()에서 발생하는 에러(ValueError)는 Event.decode 메서드에서 처리하는게 맞지 않을까 생각함([사전조건-demanding 접근법](#계약에-의한-디자인))
 
 **Traceback 노출금지**
 
