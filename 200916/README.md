@@ -27,6 +27,8 @@ print(my_numbers[interval])  # 1, 2, 3
 - 튜플, 문자열, 리스트에서 특정 요소를 가져올 때 for 보다 **slice를 이용하는 것이 좋다**.
 - 위와 같이 object[key]와 같은 형태를 호출 할 때 '**\_\_getitem\_\_**' 매직 메서드가 호출 된다.
 
+[처음으로](#200916)
+
 
 
 ### 자체 시퀀스 생성
@@ -75,6 +77,8 @@ print(len(a))  # 4
 - 범위로 인덱싱하는 결과는 해당 클래스와 같은 타입의 인스턴스여야 한다.
   - list[1:2] -> **type<list>**, tuple[1:2] -> **type<tuple>**
 - slice에 제공된 범위는 파이썬과 동일하게 마지막 요소는 제외
+
+[처음으로](#200916)
 
 
 
@@ -204,6 +208,8 @@ def offline_backup():
 - 기존의 함수를 리팩토링하기 쉬워진다.
   - 많은 상태를 관리할 필요가 없고 다른 클래스와 독립적인 컨텍스트 관리자가 필요할 경우 유용
 
+[처음으로](#200916)
+
 
 
 # Property
@@ -264,6 +270,10 @@ def offline_backup():
 - Property는 명령-쿼리 분리 원칙(**[Command and query seperation]([https://en.wikipedia.org/wiki/Command%E2%80%93query_separation](https://en.wikipedia.org/wiki/Command–query_separation))** 또는 **CQRS 원칙**)을 준수하기 좋은 방법
 
   - 객체의 한 메서드가 상태를 변경하는 작업(set) 또는 값을 반환하는 작업(get) **둘 중 하나만 수행**해야한다.
+
+[처음으로](#200916)
+
+
 
 # Iterable
 
@@ -354,7 +364,7 @@ def offline_backup():
   - **두 번째 예제**는 객체 자신이 아닌 제너레이터(**yield**가 포함된 함수)를 반환. 객체는 start_date와 end_date 값을 유지한 상태
   - 첫 번째 반복문이 끝나고 두 번째 반복문에서 객체가 가지고 있는 start_date와 end_date를 이용해 제너레이터에서 값을 생성할 수 있음 -> 여러 반복문을 문제없이 수행할 수 있다.
 
-
+[처음으로](#200916)
 
 
 

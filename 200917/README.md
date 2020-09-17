@@ -16,7 +16,7 @@
 
 
 
-# Sequence
+# Sequence 
 
 - Sequence는 **len**과 **getitem** 매직 메서드가 구현된 객체를 의미([자체 시퀀스 생성]([https://github.com/navill/Python_TIL/tree/master/200916#%EC%9E%90%EC%B2%B4-%EC%8B%9C%ED%80%80%EC%8A%A4-%EC%83%9D%EC%84%B1](https://github.com/navill/Python_TIL/tree/master/200916#자체-시퀀스-생성)) 참고) 
 
@@ -63,6 +63,8 @@
   - 내장된 자료구조를 래핑하여 구현할 경우 호환성과 일관성을 올바르게 유지할 수 있다.
 
 - iterable과 sequence(+generator)를 사용할 때 메모리와 cpu의 트레이드 오프 관계를 생각하자.
+
+[처음으로](#200917)
 
 
 
@@ -125,6 +127,8 @@ mark_coordinate(g, [3, 3])  # Mark:1
 - 실제 비교 구문을 Boundaries에 위임
 - 외부에서 mark_coordnate()을 사용할 때 가독성을 높일 수 있다.
 
+[처음으로](#200917)
+
 
 
 # 객체의 동적인 속성(\_\_getattr\_\_)
@@ -166,6 +170,8 @@ mark_coordinate(g, [3, 3])  # Mark:1
      - dyn.fallback_test: 객체에 없는 fallback_test 속성을 호출 -> \_\_getattr\_\_이 호출되면서 문자열을 반환한다.
      - getattr(dyn, 'something', 'default'): 디폴트값을 설정할 경우, exception이 일어날 때 디폴트 값이 반환된다.
 
+[처음으로](#200917)
+
 
 
 # callable
@@ -198,6 +204,8 @@ mark_coordinate(g, [3, 3])  # Mark:1
   - 객체를 생성할 때 _count는 dict 타입의 속성을 갖는다.
   - cc객체에 **매개 변수**를 전달할 경우 **\_\_call\_\_ 메서드의 매개변수**로 전달된다.
   - 해당 매개변수는 _count의 **키**로 사용되며 값으로 호출된 만큼의 숫자가 **값**으로 저장된다.
+
+[처음으로](#200917)
 
 
 
@@ -248,6 +256,8 @@ mark_coordinate(g, [3, 3])  # Mark:1
 
   - UserList를 호출할 경우 정상적으로 GoodList의 getitem 매직 메서드가 실행된다.
 
+[처음으로](#200917)
+
 
 
 
@@ -279,23 +289,27 @@ mark_coordinate(g, [3, 3])  # Mark:1
 - 사후조건을 만족할 경우 특정 속성이 보전되도록 보장해야하며, 조건에 맞지 않을 경우 **예외 처리**를 하여 호출자에게 알려야한다.
 - 사용자는 아무 문제 없이 반환 객체를 사용할 수 있어야 한다.
 
+[처음으로](#200917)
+
 
 
 # 파이썬스러운 계약
 
 - 메서드, 함수 및 클래스에 RuntimeError 또는 ValueError 예외를 발생시키는 제어 메커니즘을 추가
-
 - 문제를 정확히 특정하기 어려운 사용자 정의 예외를 만들어서 사용
-
 - 코드를 격리된 상태 유지 -> 사전조건에 대한 검사, 사후 조건에 대한 검사, 핵심 기능을 구분하여 구현해야한다(데코레이터를 이용하여 분리할 수 있다).
 
-  
+[처음으로](#200917)
+
+
 
 # 방어적 프로그래밍
 
 - 방어적 프로그래밍: 계약을 통해 성공과 실패를 포함한 모든 조건을 서술하는 대신, 객체, 함수 또는 메서드와 같이 코드 레벨에서 유효하지 않은 것으로부터 보호하는 방법
 - 예상할 수 있는 시나리오의 오류를 처리하는 방법 - 에러 핸들링 프로시저
 - 발생하지 않아야 하는 오류를 처리하는 방법 - 어썰션(assertion)
+
+[처음으로](#200917)
 
 
 
@@ -462,6 +476,8 @@ def process(data_dictionary, record_id):
 
 - 원본 예외(KeyError)를 사용자 정의 예외(InternalDataError)로 래핑할 때 **raise \<exception\> from \<original exception\>** 을 사용한다.
 - 원본의 traceback이 새로운 exception에 포함되고, 원본 예외는 exception.\_\_cause\_\_ 속성으로 설정된다.
+
+[처음으로](#200917)
 
 
 
