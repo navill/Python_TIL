@@ -234,6 +234,233 @@ mark_coordinate(g, [3, 3])  # Mark:1
 
 
 
+# 계약에 의한 디자인
+
+계약(contract): 코드가 정상적으로 동작하기 위해 기대하는 것(input)과 호출자가 반환 받기를 기대하는 것(output)은 코드 디자인에 포함되어있어야 한다.
+
+- 오류를 쉽게 찾아낼 수 있고, 잘못된 가정하에 코드의 핵심부분이 동작하는 것을 막기 위해 사용된다.
+
+- 관계자(사용자 또는 클라이언트 코드)가 기대하는 바를 코드에 삽입하는 대신 **양측이 동의하는 계약**을 하고, 계약을 어길 경우 명시적으로 왜 계속 할 수 없는지 예외를 발생시켜야 한다. 코드 레벨에서는 **사전조건**과 **사후조건**으로 나뉜다.
+
+
+
+**사전조건(Precondition)** - Client 책임
+
+- 코드가 실행되기 전에 체크해야하는 것들(ex: 파라미터의 유효성 체크)
+- 런타임 중에 확인할 수 있다 -> 사전조건에 맞지않으면 코드가 실행되면 안된다.
+  - **관용적인(tolerant) 접근법**: 클라이언트가 함수를 호출하기 전에 **인가될 파라미터의 유효성을 검사**
+  - **까다로운(demanding) 접근법**: 함수가 자체적으로 로직을 실행하기 전 **인가된 파라미터의 유효성을 검사(지향)**
+  - 두 접근법 중 **한 가지만** 사용해야한다 - 중복 제거 원칙 준수
+
+
+
+**사후조건(Postcondition)** - Module or Component 책임
+
+- 코드가 실행된 후 체크해야하는 것들(ex: 반환 값에 대한 유효성 체크)
+
+- 사후조건을 만족할 경우 특정 속성이 보전되도록 보장해야하며, 조건에 맞지 않을 경우 **예외 처리**를 하여 호출자에게 알려야한다.
+- 사용자는 아무 문제 없이 반환 객체를 사용할 수 있어야 한다.
+
+
+
+# 파이썬스러운 계약
+
+- 메서드, 함수 및 클래스에 RuntimeError 또는 ValueError 예외를 발생시키는 제어 메커니즘을 추가
+
+- 문제를 정확히 특정하기 어려운 사용자 정의 예외를 만들어서 사용
+
+- 코드를 격리된 상태 유지 -> 사전조건에 대한 검사, 사후 조건에 대한 검사, 핵심 기능을 구분하여 구현해야한다(데코레이터를 이용하여 분리할 수 있다).
+
+  
+
+# 방어적 프로그래밍
+
+- 방어적 프로그래밍: 계약을 통해 성공과 실패를 포함한 모든 조건을 서술하는 대신, 객체, 함수 또는 메서드와 같이 코드 레벨에서 유효하지 않은 것으로부터 보호하는 방법
+- 예상할 수 있는 시나리오의 오류를 처리하는 방법 - 에러 핸들링 프로시저
+- 발생하지 않아야 하는 오류를 처리하는 방법 - 어썰션(assertion)
+
+
+
+### 에러 핸들링
+
+**값 대체**
+
+- 예상되는 에러에 대해 계속 실행할지 아니면 중단할지 결정하는 것
+  - 값 대체: 잘못된 값을 생성하거나 시스템에 치명적인 위험(프로그램이 종료되는)이 있을 경우 결과값을 안전한 값(잘 알려진 상수, 초기값 등)으로 대체
+    - 제공되지 않은 데이터에 기본값을 사용하는 방법
+
+**예외 처리**
+
+- 함수는 발생한 오류에 대해 명확하고 분명하게 호출자에게 알려주고 적절히 처리할 수 있도록 해야 한다.
+
+- 예외를 이용해 시나리오나 비지니스 로직을 처리하려고 할 경우 프로그램의 흐름을 이해하기 어려워질 수 있기 때문에 지양하는 것이 좋다.
+
+  - 예외는 반드시 호출자가 아얄아하는 실질적인 문제를 알리기 위한 용도로 사용해야 한다.
+  - 예외는 오직 한가지 일을 하는 함수의 한 부분이어야 한다.
+
+  ```python
+  import logging
+  import time
+  
+  logger = logging.getLogger(__name__)
+  
+  
+  class Connector:
+      """Abstract the connection to a database."""
+  
+      def connect(self):
+          """Connect to a data source."""
+          return self
+  
+      @staticmethod
+      def send(data):
+          return data
+  
+  
+  class Event:
+      def __init__(self, payload):
+          self._payload = payload
+  
+      def decode(self):
+          return f"decoded {self._payload}"
+  
+  
+  class DataTransport:
+      """An example of an object badly handling exceptions of different levels."""
+  
+      retry_threshold: int = 5
+      retry_n_times: int = 3
+  
+      def __init__(self, connector):
+          self._connector = connector
+          self.connection = None
+  
+      def deliver_event(self, event):  
+          try:
+              self.connect()  # *
+              data = event.decode()  # **
+              self.send(data)
+          except ConnectionError as e:  # from *
+              logger.info("connection error detected: %s", e)
+              raise
+          except ValueError as e:  # from **
+              logger.error("%r contains incorrect data: %s", event, e)
+              raise
+  
+      def connect(self):
+          for _ in range(self.retry_n_times):
+              try:
+                  self.connection = self._connector.connect()
+              except ConnectionError as e:
+                  logger.info(
+                      "%s: attempting new connection in %is",
+                      e,
+                      self.retry_threshold,
+                  )
+                  time.sleep(self.retry_threshold)
+              else:
+                  return self.connection
+          raise ConnectionError(
+              f"Couldn't connect after {self.retry_n_times} times"
+          )
+  
+      def send(self, data):
+          return self.connection.send(data)
+  
+  ```
+
+  - 주석이 달린 두 예외는 서로 관련이 없음 -> 별도의 예외로 나뉘어야 한다.
+    - ConnectionError -> self.connect
+    - ValueError -> event.decode()
+
+  ```python
+  def connect_with_retry(connector, retry_n_times, retry_threshold=5):
+      for _ in range(retry_n_times):
+          try:
+              return connector.connect()
+          except ConnectionError as e:
+              logger.info(
+                  "%s: attempting new connection in %is", e, retry_threshold
+              )
+              time.sleep(retry_threshold)
+      exc = ConnectionError(f"Couldn't connect after {retry_n_times} times")
+      logger.exception(exc)
+      raise exc
+      
+  class DataTransport:
+      """An example of an object that separates the exception handling by
+      abstraction levels.
+      """
+  
+      retry_threshold: int = 5
+      retry_n_times: int = 3
+  
+      def __init__(self, connector):
+          self._connector = connector
+          self.connection = None
+  
+      def deliver_event(self, event):
+          self.connection = connect_with_retry(
+              self._connector, self.retry_n_times, self.retry_threshold
+          )
+          self.send(event)
+  
+      def send(self, event):
+          try:
+              return self.connection.send(event.decode())
+          except ValueError as e:
+              logger.error("%r contains incorrect data: %s", event, e)
+              raise
+  
+  ```
+
+  - deliver_event() 메서드는 이벤트를 전달하는 기능을 담당하고, 연결(connect_with_retry)과 전송(send)에서 각각의 에러를 처리한다.
+    - 개인적인 생각: event.decode()에서 발생하는 에러(ValueError)는 Event.decode 메서드에서 처리하는게 맞지 않을까 생각함
+
+**Traceback 노출금지**
+
+- 특정 예외를 효율적으로 해결할 수 있또록 traceback 정보, 메시지 등을 로그로 남기는 것은 중요하지만 절대 세부사항을 사용자에게 드러내서는 안된다.
+
+**비어있는 except(극 안티패턴) 블록 지양**
+
+- 예상되는 문제가 발생할 경우 반드시 그에 맞는 조치를 취해야한다.
+- except: pass 블록은 이를 무시하는 행위로 올바른 동작을 방해할 뿐만 아니라 유지보수를 어렵게 한다.
+  - 아래의 두 항목을 적용하라
+    1. 광범위한 예외(Exception)보다 구체적인 예외(AttributeError, KeyError 등)를 사용하라
+    2. except 블록에서 실제 오류 처리
+
+**원본 예외 포함**
+
+```python
+class InternalDataError(Exception):
+    """업무 도메인 데이터의 예외"""
+
+def process(data_dictionary, record_id):
+    try:
+        return data_dictionary[record_id]
+    except KeyError as e:
+        raise InternalDataError("기록 없음") from e
+```
+
+- 원본 예외(KeyError)를 사용자 정의 예외(InternalDataError)로 래핑할 때 **raise \<exception\> from \<original exception\>** 을 사용한다.
+- 원본의 traceback이 새로운 exception에 포함되고, 원본 예외는 exception.\_\_cause\_\_ 속성으로 설정된다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

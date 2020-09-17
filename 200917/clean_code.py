@@ -138,6 +138,8 @@ class BadList(list):
 
 bl = BadList((0, 1, 2, 3, 4, 5))
 print(bl)
+
+
 # "".join(bl)
 
 
@@ -155,3 +157,7 @@ class GoodList(UserList):
 bl = GoodList((0, 1, 2, 3, 4, 5))
 print(bl)
 print(";".join(bl))
+
+# ------------- Design by Contract --------------
+import os
+print(os.getenv('DBHOST'))
