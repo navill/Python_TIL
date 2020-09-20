@@ -3,7 +3,8 @@
 - [관심사의 분리](#관심사의-분리)
 - [컴포지션과 상속](#컴포지션composition과-상속inheritance)
 - [상속 안티패턴](#상속-안티패턴)
-- []()
+
+  
 
 **[처음으로](#200918)**
 
@@ -128,13 +129,37 @@
     ```
 
     - 클래스를 dict으로 만들지 않고 **composition**을 통해 dict를 활용한다.
+
     - private(self._data) 속성에 dict를 저장
-    - \_\_getitem\_\_으로 사전의 프록시(중개자)를 생성
+
+    - \_\_getitem\_\_으로 사전의 프록시(중개자)를 생성 
+
     - 필요한 public method(change_in_policy)를 구현
+
+      ```python
+      class TransactionalPolicy:
+          def change_in_policy(self, customer_id, **new_policy_data):
+              self._data[customer_id].update(**new_policy_data)
+      
+      policy.change_in_policy('client001', expiration_date=datetime(2020, 9, 20))      
+      ```
+
+      - public method는 단지 self_.data의 **update** 기능을 끌어다 쓸 뿐이다.
 
   - 두 번째 예제는 개념적으로 정확하고 확장성 또한 뛰어나다.
 
     -> 낮은 결합력과 낮은 파급효과를 갖춘 코드
+
+
+
+- 온전히 기본 클래스에 추가적으로, 그리고 보다 특화된 것을 구현할 필요가 있을 때 확장(상속)해야 한다.
+
+  (기본 기능을 바탕으로 구체적이거나 약간 수정된 **'dict'**가 필요할 때에만 사전을 상속받아 확장해야 한다.)
+
+  - 위 예제는 **dict의 전체적인 기능을 유지**하면서 특화된 기능을 추가하는 예제가 아닌, **추가된 메서드**(change_in_policy)의 **기능이 객체의 핵심**이 되는 예제이다.
+  - 따라서 solution 예제에서는 **proxy**를 이용해 composition된 dict객체 일부를 사용하고 public 메서드를 추가하여 원하는 기능을 구현
+
+  
 
 
 
