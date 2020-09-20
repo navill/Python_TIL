@@ -165,3 +165,4 @@ static/
 storage/
 app/key_file.py
 staticfiles/
+.gitignore
