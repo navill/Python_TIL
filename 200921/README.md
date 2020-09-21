@@ -420,9 +420,11 @@ class JSONEventParser:
 - 추상 클래스를 포함해 기본 클래스는 다른 클래스들이 확장할 수 있도록 인터페이스를 잘 정의해야 한다.
 - 위 예제에서는 전혀 관련없는 두 메서드를 분리하여 개별적인 인터페이스를 구현하였지만, 필요에 따라 둘 이상의 메서드가 포함될 수 있다(ex: context manager의 \_\_enter\_\_(), \_\_exit\_\_())
 
-  
+<br>
 
 **[처음으로](#200921)**
+
+<br>
 
 
 
@@ -445,7 +447,7 @@ class JSONEventParser:
 
 
 
-### 엄격한 의존의 예 ([잔재미 코딩](https://www.fun-coding.org/PL&OOP2-1.html))
+### 엄격한 의존의 예 ([잔재미 코딩](https://www.fun-coding.org/PL&OOP2-1.html#12.5.-DIP(Dependency-Inversion-Principle)-의존성-역전-법칙))
 
 ```python
 class BubbleSort:  # B
