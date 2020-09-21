@@ -3,7 +3,7 @@
 ### SOLID 법칙
 - [단일 책임 원칙](#단일-책임-원칙single-responsibility-principle)
 
-- [개방/폐쇄 원칙](#개방__폐쇄-원칙)
+- [개방/폐쇄 원칙](#개방폐쇄-원칙openclose-principle)
 
 - [리스코브 치환 원칙](#리스코프-치환-원칙liskov-substitution-principle)
 
