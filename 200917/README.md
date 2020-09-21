@@ -65,6 +65,7 @@
 - iterable과 sequence(+generator)를 사용할 때 메모리와 cpu의 트레이드 오프 관계를 생각하자.
 
 <br>
+
 **[처음으로](#200917)**
 <br>
 
@@ -129,6 +130,7 @@ mark_coordinate(g, [3, 3])  # Mark:1
 - 외부에서 mark_coordnate()을 사용할 때 가독성을 높일 수 있다.
 
 <br>
+
 **[처음으로](#200917)**
 <br>
 
@@ -173,7 +175,9 @@ mark_coordinate(g, [3, 3])  # Mark:1
      - getattr(dyn, 'something', 'default'): 디폴트값을 설정할 경우, exception이 일어날 때 디폴트 값이 반환된다.
 
 <br>
+
 **[처음으로](#200917)**
+
 <br>
 
 
@@ -209,6 +213,7 @@ mark_coordinate(g, [3, 3])  # Mark:1
   - 해당 매개변수는 _count의 **키**로 사용되며 값으로 호출된 만큼의 숫자가 **값**으로 저장된다.
 
 <br>
+
 **[처음으로](#200917)**
 <br>
 
@@ -262,6 +267,7 @@ mark_coordinate(g, [3, 3])  # Mark:1
   - UserList를 호출할 경우 정상적으로 GoodList의 getitem 매직 메서드가 실행된다.
 
 <br>
+
 **[처음으로](#200917)**
 <br>
 
@@ -297,6 +303,7 @@ mark_coordinate(g, [3, 3])  # Mark:1
 - 사용자는 아무 문제 없이 반환 객체를 사용할 수 있어야 한다.
 
 <br>
+
 **[처음으로](#200917)**
 <br>
 
@@ -309,6 +316,7 @@ mark_coordinate(g, [3, 3])  # Mark:1
 - 코드를 격리된 상태 유지 -> 사전조건에 대한 검사, 사후 조건에 대한 검사, 핵심 기능을 구분하여 구현해야한다(데코레이터를 이용하여 분리할 수 있다).
 
 <br>
+
 **[처음으로](#200917)**
 <br>
 
@@ -486,6 +494,7 @@ def process(data_dictionary, record_id):
 - 원본의 traceback이 새로운 exception에 포함되고, 원본 예외는 exception.\_\_cause\_\_ 속성으로 설정된다.
 
 <br>
+
 **[처음으로](#200917)**
 <br>
 
