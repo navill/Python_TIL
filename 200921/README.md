@@ -1,13 +1,13 @@
 # 200921
 
 ### SOLID 법칙
-- [단일 책임 원칙](#단일-책임-원칙)
+- [단일 책임 원칙](#단일-책임-원칙single-responsibility-principle)
 
 - [개방/폐쇄 원칙](#개방__폐쇄-원칙)
 
-- [리스코브 치환 원칙](#개방__폐쇄-원칙)
+- [리스코브 치환 원칙](#리스코프-치환-원칙liskov-substitution-principle)
 
-- [인터페이스 분리 원칙](#개방__폐쇄-원칙)
+- [인터페이스 분리 원칙](#인터페이스-분리-원칙interface-segregation-principle)
 
   
 
@@ -85,7 +85,7 @@ class Output:  # 3
 
 
 
-#개방/폐쇄 원칙(Open/Close Principle)
+# 개방/폐쇄 원칙(Open/Close Principle)
 
 - 확장에는 개방, 수정에는 폐쇄적인 클래스를 디자인하라
 
