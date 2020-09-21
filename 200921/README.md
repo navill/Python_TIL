@@ -85,6 +85,8 @@ class Output:  # 3
 
 
 
+
+
 # 개방/폐쇄 원칙(Open/Close Principle)
 
 - 확장에는 개방, 수정에는 폐쇄적인 클래스를 디자인하라
@@ -232,6 +234,8 @@ class SystemMonitor:
 
 
 
+
+
 # 리스코프 치환 원칙(Liskov Substitution Principle)
 
 - 설계 시 안정성을 유지하기 위해 객체 타입이 유지해야하는 일련의 특성
@@ -356,6 +360,8 @@ if __name__ == '__main__':
 
 
 
+
+
 # 인터페이스 분리 원칙(Interface Segregation Principle)
 
 - **인터페이스**: 객체가 노출하는 **메서드의 집합**
@@ -402,3 +408,10 @@ class JSONEventParser:
 
 - 추상 클래스를 포함해 기본 클래스는 다른 클래스들이 확장할 수 있도록 인터페이스를 잘 정의해야 한다.
 - 위 예제에서는 전혀 관련없는 두 메서드를 분리하여 개별적인 인터페이스를 구현하였지만, 필요에 따라 둘 이상의 메서드가 포함될 수 있다(ex: context manager의 \_\_enter\_\_(), \_\_exit\_\_())
+
+
+
+**[처음으로](#200921)**
+
+
+
