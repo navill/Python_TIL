@@ -9,6 +9,8 @@
 
 - [인터페이스 분리 원칙](#인터페이스-분리-원칙interface-segregation-principle)
 
+- [의존성 역전 원칙](#의존성-역전dependency-inversion)
+
   
 
 **[처음으로](#200921)**
@@ -284,7 +286,7 @@ class Event:
         """인터페이스 계약의 사전조건.
         event_data가 적절한 형태인지 유효성 검사.
         """
-        # dict type 사전 검사
+        # dict type (강한)사전조건 검사
         assert isinstance(event_data, dict), f"{event_data!r} is not a dict"
         for moment in ("before", "after"):
             # 데이터에 before 또는 after가 포함되어 있는지 사전 검사
@@ -345,7 +347,16 @@ if __name__ == '__main__':
 
 ```
 
+- 서브 클래스는 기반(Event) 클래스의 **사전조건**과 같거나 **더 약한 수준**의 사전조건으로 대체할 수 있다.
 
+  - 기반 클래스의 사전조건에 실패할 경우 시스템 실패로 처리해도 무방
+  - 만약 서브 클래스를 기반 클래스로 대체 할 때, 기반 클래스의 사전조건보다 **매우 강한 수준**일 경우 기존에 통과하던 조건들이 통과할 수 없는 문제가 생길 수 있다.
+
+- 서브 클래스는 기반 클래스의 **사후조건**과 같거나 **더 강한 수준**의 사후조건으로 대체할 수 있다.
+
+  - 만약 서브 클래스를 기반 클래스로 대체할 때, 기반 클래스의 사후조건보다 **매우 약한 수준**일 경우 사후조건을 통과할 수 없는 조건들이 통과할 수 있는 문제가 있다. 
+
+    
 
 ### LSP 정리
 
@@ -414,4 +425,95 @@ class JSONEventParser:
 **[처음으로](#200921)**
 
 
+
+
+
+# 의존성 역전(Dependency Inversion)
+
+- 상위 모듈은 하위 모듈에 의존해서는 안된다 - 추상화에 의존해야한다.
+- 추상화는 세부사항에 의존해서는 안된다 - 세부사항이 추상화에 의존해야 한다. [wiki](https://ko.wikipedia.org/wiki/의존관계_역전_원칙)
+
+
+
+예) 상호 교류하는 A와 B 객체가 있다고 생각해보자. A는 B의 인스턴스를 사용하지만 B모듈(외부 라이브러리)을 직접 관리하지 않는다. 만약 B에 크게 의존할 경우, B가 변경될 때 정상적인 동작을 기대하기 어려워진다.
+
+이때 **의존성 역전 원칙**이 필요하다.
+
+기존에 B에 의존하던 A의 관계를 **B가 A에 의존**하도록 하는 것. A는 인터페이스(**추상 클래스**)로 구성하고, 이를 준수하는 것은 **B의 책임**이 된다.
+
+- 시스템의 변경, 수정 또는 확장될 것으로 예상되는 지점에 유연성 확보를 위해 추상화(인터페이스)를 사용한다.
+
+
+
+### 엄격한 의존의 예 ([잔재미 코딩](https://www.fun-coding.org/PL&OOP2-1.html))
+
+```python
+class BubbleSort:  # B
+    def bubble_sort(self): 
+        # sorting algorithms
+        pass
+      
+class SortManager:  # A
+    def __init__(self):
+        self.sort_method = BubbleSort() # <--- SortManager 는 BubbleSort에 의존적
+        
+    def begin_sort(self): 
+        self.sort_method.bubble_sort() # <--- BubbleSort의 bubble_sort 메서드에 의존적
+        
+sortmanager = SortManager()
+sortmanager.begin_sort()  
+```
+
+- 위 코드에서 만약 bubble_sort의 메서드명을 변경할 경우 begin_sort 메서드는 실행될 수 없다.
+
+  **-> A가 B에 의존하는 관계**
+
+
+
+### 의존성을 거꾸로
+
+```python
+class Sort(metaclass=ABCMeta):
+    @abstractmethod
+    def sort(self):
+        pass
+
+class BubbleSort(Sort):  # B
+    def sort(self): 
+        # sorting algorithms
+        pass
+      
+class SortManager:  # A
+    def __init__(self, sort_method):  # 의존성 주입
+        self.sort_method = None  # 실제로 이렇게 짜면 안됨...
+        self.set_sort_method(sort_method)
+        
+    def set_sort_method(self, sort_method):
+        self.sort_method = sort_method
+        
+    def begin_sort(self):
+        self.sort_method.sort()  # A.begin_sort에서 B에 대한 의존성을 강제한다.
+```
+
+**-> B가 A에 의존하는 관계(엄밀히 말하면 B가 추상화에 의존하는 관계)**
+
+- Sort 클래스를 상속받는 모든 자식 클래스는 sort 메서드를 포함해야한다.
+- SortManager.begin_sort는 추상 클래스의 인터페이스를 따르기 때문에 모든 Sort의 자식 클래스는 동작이 가능하다.
+
+- 다른 Sort의 자식 클래스가 생성되어도 **동일한 인터페이스를 강제**하기 때문에 **추가 또는 변경없이 동작이 가능**하다.
+
+
+
+늘 필수는 아니지만 추상 클래스를 통해 인터페이스를 구성하는 것은 좋은 습관이다
+
+- Duck typing이 가능해지면서 모델의 가독성이 높아진다.
+  - class의 상속관계는 **'is a'**관계이다.
+  - 'BubbleSort' is 'Sort' = 코드 사용자는 BubbleSort가 Sort의 인터페이스로 구성되었음을 알 수 있다.
+  - 자주 발생할 수 있는 실수를 줄일 수 있다.
+
+
+
+
+
+**[처음으로](#200921)**
 

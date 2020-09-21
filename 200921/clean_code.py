@@ -1,4 +1,7 @@
 # --------------- [개방폐쇄] ---------------------
+from abc import ABCMeta, abstractmethod
+
+
 class Event:
     def __init__(self, raw_data):
         self.raw_data = raw_data
@@ -173,6 +176,46 @@ class SystemMonitor:
         )
         return event_cls(self.event_data)
 
+
+# -------------- Dependancy Inversion --------------
+class Sort(metaclass=ABCMeta):
+    @abstractmethod
+    def sort(self):
+        pass
+
+
+class BubbleSort(Sort):  # B
+    def sort(self):
+        print('bubble sort')
+        pass
+
+
+class QuickSort:
+    def sort(self):
+        print('quick sort')
+        pass
+
+
+class SortManager:  # A
+    def __init__(self, sort_method):  # 의존성 주입
+        self._sort_method = None
+        self.set_sort_method(sort_method)
+
+    def set_sort_method(self, sort_method):
+        self._sort_method = sort_method
+
+    def begin_sort(self):
+        self._sort_method.sort()  # A.begin_sort에서 B에 대한 의존성을 강제한다.
+
+
+bubble_sort1 = BubbleSort()
+quick_sort1 = QuickSort()
+
+sorting1 = SortManager(bubble_sort1)
+sorting1.begin_sort()
+
+sorting2 = SortManager(quick_sort1)
+sorting2.begin_sort()
 
 if __name__ == '__main__':
     l4 = SystemMonitor({"before": {}, "after": {"transaction": "Tx001"}})
