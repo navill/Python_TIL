@@ -507,7 +507,7 @@ class SortManager:  # A
 늘 필수는 아니지만 추상 클래스를 통해 인터페이스를 구성하는 것은 좋은 습관이다
 
 - Duck typing이 가능해지면서 모델의 가독성이 높아진다.
-  - class의 상속관계는 **'is a'**관계이다.
+  - class의 상속관계는 **\'is a\'**관계이다.
   - 'BubbleSort' is 'Sort' = 코드 사용자는 BubbleSort가 Sort의 인터페이스로 구성되었음을 알 수 있다.
   - 자주 발생할 수 있는 실수를 줄일 수 있다.
 
