@@ -4,7 +4,7 @@
 - [클래스 데코레이터](#클래스-데코레이터)
 - [데코레이터에 인자 전달](#데코레이터에-인자-전달)
 - [데코레이터 활용](#데코레이터-활용)
-- [Generic Decorator](#generic-decorator어느곳에서나-동작하는-데코레이터)
+- [Generic Decorator(임의로 지은 이름)](#generic-decorator어느곳에서나-동작하는-데코레이터)
 
 
 
@@ -483,7 +483,7 @@ print(EVENT_REGISTRY)
 
   - 작성된 wrapped에 전달되는 매개변수는 **1개**이지만 메서드는 기본적으로 **self**를 전달해야하기 때문에 메서드에서 일반 데코레이터를 사용할 경우 **TypeError**를 일으킨다.
 
-  - 이 문제는 클래스 데코레이터를 구성하면서 **\_\_get\_\_** 메서드를 구현한 디스크립터 객체를 만들어 해결 할 수 있다.
+  - 이 문제는 클래스 데코레이터를 구성하면서 **\_\_get\_\_** 메서드를 구현한 **디스크립터 객체**를 이용해 해결 할 수 있다.
 
     ```python
     class inject_db_driver:
@@ -517,14 +517,16 @@ print(EVENT_REGISTRY)
     # test 에서 쿼리 DataHandler 실행
     ```
 
-    [types.MethodType](https://docs.python.org/ko/3/c-api/method.html#method-objects): 클래스 객체에 함수를 동적으로 연결시킬 수 있다.
+    - **[types.MethodType](https://docs.python.org/ko/3/c-api/method.html#method-objects):** 클래스 객체에 함수를 동적으로 연결시킬 수 있다.
 
-    - *: inject_db_driver 클래스로부터 생성된 객체(instance)에 self.function **메서드**를 연결시킨다.
+    - ***:** inject_db_driver 클래스로부터 생성된 객체(instance)에 self.function **메서드**를 연결시킨다.
 
       -> method는 self를 제대로 인식할 수 있다.
 
     - 이후 **\_\_call\_\_** 실행
 
+    - 위 코드는 **[디스크립터]()**에 대한 내용을 이해하고 다시 정리 할 예정
+    
       
 
 <br>

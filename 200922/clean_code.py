@@ -220,8 +220,21 @@ def run_operation(task):
     return task.run()
 
 
+class A:
+    def __init__(self):
+        self.a = 'retry with A class'
+
+    @WithRetry(retries_limit=3)
+    def show(self):
+        print(self.a)
+        # raise ControlledException('a')
+
+A().show()
+
+
 oo = OperationObject()
 rf = RunWithFailure(oo, 2)
+print('1111111111111')
 print(run_operation(oo))  # 1
 print(run_operation_with_fail(rf))  # 4
 
