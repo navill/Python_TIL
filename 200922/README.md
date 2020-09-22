@@ -429,8 +429,6 @@ print(EVENT_REGISTRY)
 
 <br>
 
-Generic decorator(어느곳에서나 동작하는 데코레이터)
-
 
 
 # Generic decorator(어느곳에서나 동작하는 데코레이터)
