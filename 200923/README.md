@@ -6,13 +6,10 @@
 
 <br>
 
-- [디스크립터](#디스크립터)
-
-- [디스크립터의 유형](#디스크립터의-유형)
-
-- [setattr(instance, "descriptor", value)가 아닌 instance.\_\_dict\_\_['descriptor']를 쓰는 이유는?]()
-
-- [디스크립터가 모든 인스턴스의 속성 값을 보관할 수 없는 이유는?]()
+- **[디스크립터](#디스크립터)**
+- **[디스크립터의 유형](#디스크립터의-유형)**
+- **[setattr(instance, "descriptor", value)가 아닌 instance.\_\_dict\_\_['descriptor']를 쓰는 이유는?](#setattrinstance-descriptor-value가-아닌-instance__dict__descriptor를-쓰는-이유는)**
+- **[디스크립터가 모든 인스턴스의 속성 값을 보관할 수 없는 이유는?](#디스크립터가-모든-인스턴스의-속성-값을-보관할-수-없는-이유는)**
 
     
 
@@ -34,13 +31,10 @@
 
 - 아래의 메서드를 최소 한 개 이상 구현해야한다.
 
-    - **[\_\_get_\_](#get)**
-
-    - **[\_\_set_\_]()**
-
-    - **[\_\_delete_\_]()**
-
-    - **[\_\_set_name_\_]()**
+    - **[\_\_get_\_](#__get__self-instance-owner)**
+    - **[\_\_set_\_](#__set__self-instance-value)**
+    - **[\_\_delete_\_](#__delete__self-instance)**
+    - **[\_\_set_name_\_](#__set_name__self-owner-name)**
 
         
 
@@ -272,13 +266,13 @@ client.descriptor = '42'  # ValueError: '42'는 숫자가 아님
 
 # 디스크립터의 유형
 
-**[데이터 디스크립터(data descriptor)]()**: **\_\_set\_\_**또는 **\_\_delete\_\_** 메서드를 구현한 디스크립터
+**[데이터 디스크립터(data descriptor)](#비데이터non-data-디스크립터사전-우선)**: **\_\_set\_\_**또는 **\_\_delete\_\_** 메서드를 구현한 디스크립터
 
-​	**obj.\_\_dict\_\_ < data_descriptor**
+​	**(우선순위: obj.\_\_dict\_\_ < data_descriptor)**
 
-**[비데이터 디스크립터(non-data descripto)]()**: **\_\_get\_\_** 메서드만 구현한 디스크립터
+**[비데이터 디스크립터(non-data descripto)](#데이터data-디스크립터디스크립터-우선)**: **\_\_get\_\_** 메서드만 구현한 디스크립터
 
-​	**obj.\_\_dict\_\_ > data_descriptor**
+​	**(우선순위: obj.\_\_dict\_\_ > data_descriptor)**
 
 >   \_\_set\_name\_\_은 어떤 유형에도 속하지 않는다.
 >
@@ -325,7 +319,7 @@ print(vars(client))  # {}
 -   **del client.descriptor:** 비데이터 디스크립터(\_\_delete\_\_이 구현되지 않음)이기 때문에 **객체의 사전**에서 디스크립터의 키를 삭제
 -   **client.descriptor:** 처음 디스크립터를 호출할 때와 동일한 상태를 갖으며 사전은 빈 상태가 된다.
 
-
+<br>
 
 ### 데이터(data) 디스크립터(디스크립터 우선)
 
@@ -356,7 +350,6 @@ del client.descriptor  # AttributeError: __delete__
 -   **client.descriptor:** **디스크립터를 우선 호출**하면서 사전이 아닌 **\_\_get\_\_의 반환값**이 출력됨(42 출력)
 -   **vars(client): \_\_set\_\_** 메서드에 의해서 사전 값이 변경됨
     -   결과적으로 입력된 값은 **set에 의해 사전**에 저장되지만, 출력될 때 사전보다 높은 우선순위를 같은 **get의 반환값이 출력**된다.
-
 -   **del client.descriptor:** 데이터 디스크립터이기 때문에 사전의 키값을 지우는 것이 아닌 구현되지 않은 \_\_delete\_\_를 호출하면서 에러를 일으킨다.
 
 <br>
