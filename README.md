@@ -6,9 +6,11 @@
 
 ## Python CleanCode
 
+- **[200923](https://github.com/navill/Python_TIL/tree/master/200923):** 디스크립터, 디스크립터의 유형, 디스크립터에 대한 2가지 유의사항 **[어려움]**
+
 - **[200922](https://github.com/navill/Python_TIL/tree/master/200922):** 함수 데코레이터, 클래스 데코레이터, 데코레이터에 인자 전달, 데코레이터 활용, Generic 데코레이터
 
-- **[200921](https://github.com/navill/Python_TIL/tree/master/200921):** SOLID(단일 책임 원칙, 개방/폐쇄 원칙, 리스코브 치환 원칙, 인터페이스 분리 원칙, 의존성 역전 원칙)
+- **[200921](https://github.com/navill/Python_TIL/tree/master/200921):** SOLID(단일 책임 원칙, 개방/폐쇄 원칙, 리스코브 치환 원칙, 인터페이스 분리 원칙, 의존성 역전 원칙) **[중요]**
 
 - **[200920](https://github.com/navill/Python_TIL/tree/master/200920):** 함수 인자의 개수, 소프트웨어의 독립성
 
