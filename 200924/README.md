@@ -2,7 +2,9 @@
 
 - **[디스크립터를 사용한 어플리케이션](#디스크립터를-사용한-어플리케이션)**
 - **[다른 형태의 디스크립터](#다른-형태의-디스크립터)**
-- **[]()**
+- **[디스크립터에 대한 추가 고려사항](#디스크립터에-대한-추가-고려사항)**
+
+- **[파이썬 내부에서의 디스크립터 활용](#파이썬-내부에서의-디스크립터-활용)**
 
 
 
@@ -304,7 +306,7 @@ class Traveller:
 
 ### 클래스 데코레이터 피하기
 
--   데코레이터 클래스의 [코드 개선]()하기 코드의 두 데코레이터를 디스크립터로 변경
+-   데코레이터 클래스의 [코드 개선](https://github.com/navill/Python_TIL/tree/master/200922#코드-개선)하기 코드의 두 데코레이터를 디스크립터로 변경
 
     ```python
     class BaseFieldTransformation:
@@ -361,27 +363,159 @@ class Traveller:
     print(le.timestamp)  # 2020-09-24 05:12
     print(le.serialize())
     # {'username': 'jihoon', 'password': '민감한 정보', 'ip': '123.123.123.1', 'timestamp': '2020-09-24 05:15'}
+    print(vars(le))
+    # {'username': 'jihoon', 'password': 'test1234', 'ip': '123.123.123.1', 'timestamp': datetime.datetime(2020, 9, 24, 6, 3, 43, 180595)}
     ```
 
-    
+    -   \_\_set\_\_에서 instance.\_\_dict\_\_에 값을 할당하기 때문에 vars(le)를 통해 원본 데이터에 접근할 수 있다.
+
+    -   만약 민감한 정보를 메모리상에서 유지하고싶지 않을 경우 아래와 같이 set에서 변경된 데이터를 사전에 저장할 수 있다.
+
+        ```python
+        def __get__(self, instance, owner):
+            if instance is None:
+                return self
+            raw_value = instance.__dict__[self._name]
+            return raw_value
+        
+        def __set__(self, instance, value):
+            transformed_value = self.tranformation(value)
+            instance.__dict__[self._name] = transformed_value
+        ...
+        
+        print(vars(le))
+        {'username': 'jihoon', 'password': '민감한 정보', 'ip': '123.123.123.1', 'timestamp': '2020-09-24 06:24'}
+        
+        ```
+
+        
 
 
 
+<br>
 
 
 
+**[처음으로](#20xx)**
+
+<br>
 
 
 
+# 파이썬 내부에서의 디스크립터 활용
+
+-   좋은 디스크립터는 파이썬에서 사용하는 디스크립터를 참고
 
 
 
+### 함수와 메서드
+
+-   함수는 내부에 \_\_get\_\_ 메서드를 구현하고 있기 때문에 클래스 내에서 메서드로 동작한다.
+    -   메서드는 추가 파라미터(self)를 가진 함수
+
+    -   메서드는 객체에 바인딩되어 있으며 객체를 수정하는 함수일 뿐이다.
+
+        ```python
+        class MyClass:
+            def method(self, ...):
+                self.x = 1
+        
+        # 위와 동일
+        class MyClass: 
+        def method(myclass_instance, ...):
+            myclass_instance.x = 1
+        method(MyClass())
+        
+        # ----------------------------------
+        
+        instance = MyClass()
+        instance.method(...)
+        
+        # 위 코드를 파이썬은 아래와 같이 처리
+        instance = MyClass()
+        MyClass.method(instance, ...)
+        ```
+
+        -   instance.method(...): 괄호 안의 파라미터를 처리하기 전에 **'instance.method'가 먼저 평가**된다.
+
+        -   method는 클래스 속성으로 정의된 객체이며 내부에 \_\_get\_\_ 메서드를 가지고 있기 때문에 호출 시 \_\_get\_\_이 먼저 호출된다(함수를 객체에 바인딩하여 메서드로 변환).
+
+            
+
+            <br>
+
+            
+
+        ```python
+        class Method:
+            def __init__(self, name):
+                self.name = name
+        
+            def __call__(self, instance, arg1, arg2):
+                print(f"{self.name}: {instance} 호출됨. 인자는 {arg1}과 {arg2}")
+        
+        class MyClass():
+            method = Method('내부 호출')
+        
+        instance = MyClass()
+        Method("외부 호출")(instance, 'first', 'second')
+        # 외부 호출: <__main__.MyClass object at 0x7fa59bb4cb38> 호출됨. 인자는 first과 second
+        instance.method('first', 'second')
+        # TypeError: __call__() missing 1 required positional argument: 'arg2'
+        ```
+
+        -   파라미터의 위치가 한 칸씩 밀려서 second가 전달되어야 하는 arg2자리에 아무것도 전달되지 않는다.
+        -   메서드를 디스크립터로 변경
+
+        ```python
+        class Method:
+            def __init__(self, name):
+                self.name = name
+        
+            def __call__(self, instance, arg1, arg2):
+                print(f"{self.name}: {instance} 호출됨. 인자는 {arg1}과 {arg2}")
+        
+            def __get__(self, instance, owner):
+                if instance is None:
+                    return self
+                return MethodType(self, instance)
+        
+        class MyClass:
+            method = Method('내부 호출')
+        
+        instance = MyClass()
+        Method("외부 호출")(instance, 'first', 'second')
+        # 외부 호출: <__main__.MyClass object at 0x7fdef2331b70> 호출됨. 인자는 first과 second
+        instance.method('first', 'second')
+        # 내부 호출: <__main__.MyClass object at 0x7fdef2331b70> 호출됨. 인자는 first과 second
+        
+        ```
+
+        -   비데이터 디스크립터에서 MethodType(self, instance)을 이용해 함수를 메서드로 변경
+            -   self: 반드시 호출 가능(Method 객체(\_\_call\_\_ 메서드를 포함))한 객체여야 한다.
+            -   instance: 이 함수에 바인딩할 객체(MyClass 객체)
+
+        -   파이썬 함수도 이와 유사하게 동작
+
+            
+
+<br>
 
 
 
+### 메서드를 위한 빌트인 데코레이터[추후 다시 정리]
+
+-   @property, @classmethod, @staticmethod 데코레이터는 디스크립터로 구성되어있다.
+-   메서드를 클래스에서 직접 호출하면 디스크립터 자체(self)를 반환
+-   @classmethod를 사용하면 디스크립터의 \_\_get\_\_ 함수가 메서드를 데코레이팅 함수에 첫 번째 파라미터로 메서드를 소유한 클래스(owner)를 넘겨준다
+
+<br>
 
 
 
+**[처음으로](#20xx)**
+
+<br>
 
 
 
