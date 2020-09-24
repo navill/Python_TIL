@@ -1,6 +1,6 @@
 # 200922
 
-- [함수 데코레이터]()
+- [함수 데코레이터](#함수-데코레이터)
 - [클래스 데코레이터](#클래스-데코레이터)
 - [데코레이터에 인자 전달](#데코레이터에-인자-전달)
 - [데코레이터 활용](#데코레이터-활용)
@@ -149,8 +149,10 @@
 
   
 
-  단순히 속성을 저장하기 위한 클래스를 사용할 경우 **@dataclass** 데코레이터를 이용할 수 있다.
+  ### 코드 개선
 
+  단순히 속성을 저장하기 위한 클래스를 사용할 경우 **@dataclass** 데코레이터를 이용할 수 있다.
+  
   ```python
   @Serialization(username=str.lower, password=hide_field, ip=show_original, timestamp=format_time)
   @dataclass
@@ -164,9 +166,9 @@
   le = LogoutEvent('JH', '4567', '123.0.0.1', datetime(2020, 9, 22, 9, 30))
   print(le.serialize())
   {'username': 'jh', 'password': '**redacted**', 'ip': '123.0.0.1', 'timestamp': '2020-09-22 9:30'}
-  
-  ```
 
+  ```
+  
   
 
 <br>
@@ -525,7 +527,7 @@ print(EVENT_REGISTRY)
 
     - 이후 **\_\_call\_\_** 실행
 
-    - 위 코드는 **[디스크립터]()**에 대한 내용을 이해하고 다시 정리 할 예정
+    - 위 코드는 **[디스크립터](https://github.com/navill/Python_TIL/tree/master/200923#디스크립터)**에 대한 내용을 이해하고 다시 정리 할 예정
     
       
 
