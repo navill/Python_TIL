@@ -6,6 +6,8 @@
 
 ## Python CleanCode
 
+- **[200924](https://github.com/navill/Python_TIL/tree/master/200924):** 디스크립터를 사용한 어플리케이션, 다른 형태의 디스크립터, 디스크립터에 대한 고려사항, 파이썬 내부에서의 디스크립터 활용[추후 다시 정리] **[어려움]**
+
 - **[200923](https://github.com/navill/Python_TIL/tree/master/200923):** 디스크립터, 디스크립터의 유형, 디스크립터에 대한 2가지 유의사항 **[어려움]**
 
 - **[200922](https://github.com/navill/Python_TIL/tree/master/200922):** 함수 데코레이터, 클래스 데코레이터, 데코레이터에 인자 전달, 데코레이터 활용, Generic 데코레이터
