@@ -266,11 +266,11 @@ client.descriptor = '42'  # ValueError: '42'는 숫자가 아님
 
 # 디스크립터의 유형
 
-**[데이터 디스크립터(data descriptor)](#비데이터non-data-디스크립터사전-우선)**:  **\_\_set\_\_**또는 **\_\_delete\_\_** 메서드를 구현한 디스크립터
+**[데이터 디스크립터(data descriptor)](#데이터data-디스크립터디스크립터-우선)**:  **\_\_set\_\_**또는 **\_\_delete\_\_** 메서드를 구현한 디스크립터
 
 ​	**(우선순위: obj.\_\_dict\_\_ < data_descriptor)**
 
-**[비데이터 디스크립터(non-data descripto)](#데이터data-디스크립터디스크립터-우선)**: **\_\_get\_\_** 메서드만 구현한 디스크립터
+**[비데이터 디스크립터(non-data descripto)](#비데이터non-data-디스크립터사전-우선)**: **\_\_get\_\_** 메서드만 구현한 디스크립터
 
 ​	**(우선순위: obj.\_\_dict\_\_ > data_descriptor)**
 
