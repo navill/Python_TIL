@@ -261,8 +261,25 @@ class TableEvent:
     def topic(cls):
         return f"{cls.schema}.{cls.table}"
 
+    @classmethod
+    def class_method(cls):
+        return f"classmethod test:{cls}"
 
+
+class ClassMethod:
+    @classmethod
+    def class_method(cls):
+        print(cls)
+        return f"classmethod test:{cls.__name__}"
+
+
+class StaticMethod:
+    @staticmethod
+    def static_method():
+        return f"staticmethod test"
 
 
 print(1, TableEvent.topic)
 print(2, TableEvent().topic)
+
+print(ClassMethod.class_method())

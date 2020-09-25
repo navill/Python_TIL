@@ -505,9 +505,36 @@ class Traveller:
 
 ### 메서드를 위한 빌트인 데코레이터[추후 다시 정리]
 
--   @property, @classmethod, @staticmethod 데코레이터는 디스크립터로 구성되어있다.
+-   [@property](https://docs.python.org/ko/3/library/functions.html?highlight=classmethod#property), [@classmethod](https://docs.python.org/ko/3/library/functions.html?highlight=classmethod#classmethod), [@staticmethod](https://docs.python.org/ko/3/library/functions.html?highlight=classmethod#staticmethod) 데코레이터는 디스크립터로 구성되어있다.
+
 -   메서드를 클래스에서 직접 호출하면 디스크립터 자체(self)를 반환
--   @classmethod를 사용하면 디스크립터의 \_\_get\_\_ 함수가 메서드를 데코레이팅 함수에 첫 번째 파라미터로 메서드를 소유한 클래스(owner)를 넘겨준다
+
+-   [@classmethod](https://docs.python.org/ko/3/library/functions.html?highlight=classmethod#classmethod)를 사용하면 classmethod 내부 디스크립터의 \_\_get\_\_ 함수가 데코레이팅 함수(class_method)의 첫 번째 파라미터로 메서드를 소유한 클래스(Klass)를 넘겨준다
+
+    ```python
+    class ClassMethod:
+        # classmethod.__get__ 메서드가 데코레이팅 함수의 첫 번째 인자에 인스턴스(klass_method)의 클래스(ClassMethod)를 전달한다.
+        @classmethod
+        def class_method(cls):  # cls = ClassMethod
+            return f"classmethod test: {cls.__name__}"
+    klass_method = ClassMethod()
+    print(klass_method.class_method())
+    # classmethod test: ClassMethod
+    ```
+
+-   [@staticmethod](https://docs.python.org/ko/3/library/functions.html?highlight=classmethod#staticmethod)를 사용하면 정의된 파라미터(static_method는 비어있음)이외의 파라미터를 넘기지 않는다.
+
+    -   self로 바인딩하는 작업을 취소
+
+    ```python
+    class StaticMethod:
+        @staticmethod
+        # staticmethod.__get__ 메서드가 데코레이팅 함수의 첫 번째 인자로 아무것도 전달되지 않는다.
+        def static_method():  
+            return f"staticmethod test"
+    ```
+
+    
 
 <br>
 
