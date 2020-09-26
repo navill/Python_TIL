@@ -6,6 +6,10 @@
 
 ## Python CleanCode
 
+- **[200926](https://github.com/navill/Python_TIL/tree/master/200926):** 이터레이션 인터페이스, 코루틴, 코루틴 고급 주제
+
+- **[200925](https://github.com/navill/Python_TIL/tree/master/200925):** 슬롯, 제너레이터, 이상적인 반복 
+
 - **[200924](https://github.com/navill/Python_TIL/tree/master/200924):** 디스크립터를 사용한 어플리케이션, 다른 형태의 디스크립터, 디스크립터에 대한 고려사항, 파이썬 내부에서의 디스크립터 활용[추후 다시 정리] **[어려움]**
 
 - **[200923](https://github.com/navill/Python_TIL/tree/master/200923):** 디스크립터, 디스크립터의 유형, 디스크립터에 대한 2가지 유의사항 **[어려움]**
