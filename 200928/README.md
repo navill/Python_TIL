@@ -217,7 +217,11 @@ print(feature_2.pull())  # develop
 **[처음으로](#200928)**
 <br>
 
-###builder 패턴 - [Notion 예제](https://www.notion.so/navill/Creational-Design-Pattern-Builder-f7e8b75c7b6c4bf9ad466d3fdaf603fa)
+
+
+
+
+### builder 패턴 - [Notion 예제](https://www.notion.so/navill/Creational-Design-Pattern-Builder-f7e8b75c7b6c4bf9ad466d3fdaf603fa)
 
 -   필요한 모든 객체를 직접 생성해주는 하나의 복잡한 객체
 
