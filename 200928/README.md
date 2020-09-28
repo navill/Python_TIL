@@ -43,9 +43,9 @@
 -   객체를 인스턴스화할 때의 복잡성을 최대한 추상화하기 위해 사용
     -   객체 초기화에 필요한 작업을 단순화하기 위함
 
--   [monostate](#monostate-패턴)
+-   [monostate](#공유-상태monostate-pattern)
 -   [borg](#borg-패턴)
--   [builder](#builder-패턴) - [Notion 예제](https://www.notion.so/navill/Creational-Design-Pattern-Builder-f7e8b75c7b6c4bf9ad466d3fdaf603fa)
+-   [builder](#builder-패턴---notion-예제) - [Notion 예제](https://www.notion.so/navill/Creational-Design-Pattern-Builder-f7e8b75c7b6c4bf9ad466d3fdaf603fa)
 
 <br>
 
