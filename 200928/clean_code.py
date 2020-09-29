@@ -101,6 +101,7 @@ class SharedAllMixin:
             self.__class__._attributes = {}
 
         self.__dict__ = self.__class__._attributes
+        print(id(self.__dict__))
         super(SharedAllMixin, self).__init__(*args, **kwargs)
 
 
@@ -122,8 +123,11 @@ class Branch(SharedAllMixin, BaseFetcher):
 
 
 tf1 = TagFetcher("tag1")
+print(id(tf1.__dict__))
 tf2 = TagFetcher("tag2")
+# print(tf2.__dict__)
 tf3 = TagFetcher("tag3")
+# print(tf3.__dict__)
 print(tf1.pull())
 print(tf1._attributes)
 print(dir(tf1))

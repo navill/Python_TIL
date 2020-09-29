@@ -184,11 +184,9 @@ print(feature_2.pull())  # develop
             self.__dict__ = self.__class__._attributes
             super(SharedAllMixin, self).__init__(*args, **kwargs)
     
-    
     class BaseFetcher:
         def __init__(self, source):
             self.source = source
-    
     
     class TagFetcher(SharedAllMixin, BaseFetcher):
         def pull(self):
@@ -212,6 +210,32 @@ print(feature_2.pull())  # develop
     print(vars(tf1))  # {'source': 'tag3'}
     ```
 
+    -   try 구문에서 \_attributes를 클래스 속성(self.\_\_class\_\_._attributes)으로 생성한다.
+
+        -   클래스 속성은 모든 클래스의 인스턴스가 공유할 수 있다.
+
+    -   생성된 클래스 속성을 클래스의 사전(\_\_dict\_\_)에 할당한다.
+
+        -   클래스 사전은 변경 가능 객체이며 인스턴스에서 값을 변경할 경우 모든 인스턴스가 그 값을 공유하게 된다.
+
+            ```python
+            class SharedAllMixin:
+                def __init__(self, *args, **kwargs):
+                    ...
+                    self.__dict__ = self.__class__._attributes
+                    print(id(self.__dict__))  # 140186081721728
+                    super(SharedAllMixin, self).__init__(*args, **kwargs)
+            
+            tf1 = TagFetcher("tag1")
+            print(id(tf1.__dict__))  # 140186081721728
+            tf2 = TagFetcher("tag2")
+            print(id(tf2.__dict__))  # 140186081721728
+            tf3 = TagFetcher("tag3")
+            print(id(tf3.__dict__))  # 140186081721728
+            ```
+
+            
+
 <br>
 
 **[처음으로](#200928)**
@@ -224,10 +248,8 @@ print(feature_2.pull())  # develop
 ### builder 패턴 - [Notion 예제](https://www.notion.so/navill/Creational-Design-Pattern-Builder-f7e8b75c7b6c4bf9ad466d3fdaf603fa)
 
 -   필요한 모든 객체를 직접 생성해주는 하나의 복잡한 객체
-
 -   builder 패턴은 언어의 특수성에 의존하지 않으므로 파이썬에서도 똑같이 적용된다.
-
-    
+-   디스크립터와 마찬가지로 여러 사용자가 사용하는 API같은 것을 노출하는 경우에만 구현하는 것이 좋다.
 
 <br>
 
