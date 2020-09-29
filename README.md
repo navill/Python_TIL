@@ -6,6 +6,8 @@
 
 ## Python CleanCode
 
+- **[200929](https://github.com/navill/Python_TIL/tree/master/200929):** 구조 패턴(어댑터, 컴포지트, 데코레이터, 파사드)
+
 - **[200928](https://github.com/navill/Python_TIL/tree/master/200928):** 파이썬에 디자인 패턴 적용 시 고려사항, 생성 패턴
 
 - **[200926](https://github.com/navill/Python_TIL/tree/master/200926):** 이터레이션 인터페이스, 코루틴, 코루틴 고급 주제
