@@ -240,10 +240,12 @@ print(a_b.price)  # 2100
     ```
 
     -   용도에 따라 위와 같이 변환 함수를 데코레이터의 파라미터에 추가하여 사용할 수 있다.
-
         -   개인적으로 이 예제가 이해하고 사용하기 쉽다고 생각함(객체 지향적인 구현은 아님)
 
-            
+<br>
+
+**[처음으로](#200200929)**
+<br>
 
 ### 파사드(Facade) - [Notion 예제](https://www.notion.so/navill/Structural-Design-Pattern-Facade-7fdb9c8375e24aa8b4911d0482c6218f)
 
@@ -258,7 +260,10 @@ print(a_b.price)  # 2100
 
 
 
+<br>
 
+**[처음으로](#200200929)**
+<br>
 
 
 
