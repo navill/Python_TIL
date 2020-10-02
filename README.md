@@ -5,7 +5,7 @@
 <br>
 
 ## Python CleanCode
-- **[200923](https://github.com/navill/Python_TIL/tree/master/200923):** 행동 패턴(책임 연쇄, 템플릿 메서드)
+- **[200930](https://github.com/navill/Python_TIL/tree/master/200930):** 행동 패턴(책임 연쇄, 템플릿 메서드)
 
 - **[200929](https://github.com/navill/Python_TIL/tree/master/200929):** 구조 패턴(어댑터, 컴포지트, 데코레이터, 파사드)
 

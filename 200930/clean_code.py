@@ -13,6 +13,7 @@ class Event:
 
         if self.successor is not None:
             return self.successor.process(logline)
+        return {}
 
     def _process(self, logline: str):
         parsed_data = self._parse_data(logline)
@@ -49,4 +50,3 @@ class SessionEvent(Event):
 # print(chain.process("567: login User"))  # {'type': 'LoginEvent', 'id': '567', 'value': 'User'}
 chain = LogoutEvent(LoginEvent(SessionEvent()))
 print(chain.process("567: login User"))  # {'type': 'LoginEvent', 'id': '567', 'value': 'User'}
-print("567: login User".split(' '))
