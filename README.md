@@ -4,8 +4,9 @@
 
 <br>
 
-## Python CleanCode
 - **[201006](https://github.com/navill/Python_TIL/tree/master/201006):** 상태 객체 혹은 상태 기계 구현, 문자열로 이루어진 객체의 메소드 호출
+
+## Python CleanCode
 
 - **[201002](https://github.com/navill/Python_TIL/tree/master/201002):** 커맨드 패턴, null 객체 패턴
 
