@@ -18,7 +18,7 @@
 
 # Sequence 
 
-- Sequence는 **len**과 **getitem** 매직 메서드가 구현된 객체를 의미([자체 시퀀스 생성]([https://github.com/navill/Python_TIL/tree/master/200916#%EC%9E%90%EC%B2%B4-%EC%8B%9C%ED%80%80%EC%8A%A4-%EC%83%9D%EC%84%B1](https://github.com/navill/Python_TIL/tree/master/200916#자체-시퀀스-생성)) 참고) 
+- Sequence는 **len**과 **getitem** 매직 메서드가 구현된 객체를 의미([자체 시퀀스 생성]([https://github.com/navill/Python_TIL/tree/master/2020/200916#%EC%9E%90%EC%B2%B4-%EC%8B%9C%ED%80%80%EC%8A%A4-%EC%83%9D%EC%84%B1](https://github.com/navill/Python_TIL/tree/master/200916#자체-시퀀스-생성)) 참고)
 
 - iterable과 마찬가지로 반복문을 통해 객체의 여러 요소를 가져올 수 있다.
 

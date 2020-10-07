@@ -527,7 +527,7 @@ print(EVENT_REGISTRY)
 
     - 이후 **\_\_call\_\_** 실행
 
-    - 위 코드는 **[디스크립터](https://github.com/navill/Python_TIL/tree/master/200923#디스크립터)**에 대한 내용을 이해하고 다시 정리 할 예정
+    - 위 코드는 **[디스크립터](https://github.com/navill/Python_TIL/tree/master/2020/200923#디스크립터)**에 대한 내용을 이해하고 다시 정리 할 예정
     
       
 

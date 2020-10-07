@@ -65,7 +65,7 @@ track_request(request)
 
 - 모듈, 클래스 또는 함수를 변경하면 수정한 컴포턴트가 외부 세계에 영향을 미치지 않아야 한다.
 
-- 이는 항상 가능할 수 없기 때문에 외부에 미치는 영향을 최소화하려는 시도가 필요하다([관심사의 분리](https://github.com/navill/Python_TIL/tree/master/200918#관심사의-분리)).
+- 이는 항상 가능할 수 없기 때문에 외부에 미치는 영향을 최소화하려는 시도가 필요하다([관심사의 분리](https://github.com/navill/Python_TIL/tree/master/2020/200918#관심사의-분리)).
 
   ```python
   class BaseTokenizer:

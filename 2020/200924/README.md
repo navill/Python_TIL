@@ -147,7 +147,7 @@ print(alice.cities_visited)
 
                 -   단, 처음 초기화시기에는 instance.\_\_dict\_\_[self._name] **존재하지 않기 때문에** KeyError 예외를  True로 반환**(self.\_name == 'current_city')**
 
-                    (**키값이 존재하지 않는 이유**: 위 예제는 **[데이터 디스크립터](https://github.com/navill/Python_TIL/tree/master/200923#데이터data-디스크립터디스크립터-우선)**로 구성된 코드. 사전보다 디스크립터를 먼저 호출하기 때문에 이 시점에 instance.\_\_dict\_\_에는 **current_city가 존재하지 않는다**. )
+                    (**키값이 존재하지 않는 이유**: 위 예제는 **[데이터 디스크립터](https://github.com/navill/Python_TIL/tree/master/2020/200923#데이터data-디스크립터디스크립터-우선)**로 구성된 코드. 사전보다 디스크립터를 먼저 호출하기 때문에 이 시점에 instance.\_\_dict\_\_에는 **current_city가 존재하지 않는다**. )
 
             -   D: 추적 속성 리스트에 외부에서 할당된 value('paris')를 추가 
             -   E: 이후 instance.\_\_dict\_\_[self._name] 업데이트
@@ -306,7 +306,7 @@ class Traveller:
 
 ### 클래스 데코레이터 피하기
 
--   데코레이터 클래스의 [코드 개선](https://github.com/navill/Python_TIL/tree/master/200922#코드-개선)하기 코드의 두 데코레이터를 디스크립터로 변경
+-   데코레이터 클래스의 [코드 개선](https://github.com/navill/Python_TIL/tree/master/2020/200922#코드-개선)하기 코드의 두 데코레이터를 디스크립터로 변경
 
     ```python
     class BaseFieldTransformation:

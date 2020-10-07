@@ -121,7 +121,7 @@ print(chain.process("567: login User"))
     -   반환 값의 타입이 동일하다면 하위 호환성이 유지된다.
         -   클래스의 일부 행동을 수정하기 위해 클라이언트는 하위 클래스를 만들고 특정 private 메서드를 오버라이딩함으로써  호환성이 유지되는 새로운 행동을 정의할 수 있다.
 
-    -   결과적으로 파생 클래스에서 동작해야할 메서드를 호출하는 것은 템플릿 메서드이므로 자연스럽게 [리스코프 치환 원칙](https://github.com/navill/Python_TIL/tree/master/200921#리스코프-치환-원칙liskov-substitution-principle)과 [개방/폐쇄 원칙](https://github.com/navill/Python_TIL/tree/master/200921#개방폐쇄-원칙openclose-principle)을 준수할 수 있다.
+    -   결과적으로 파생 클래스에서 동작해야할 메서드를 호출하는 것은 템플릿 메서드이므로 자연스럽게 [리스코프 치환 원칙](https://github.com/navill/Python_TIL/tree/master/2020/200921#리스코프-치환-원칙liskov-substitution-principle)과 [개방/폐쇄 원칙](https://github.com/navill/Python_TIL/tree/master/2020/200921#개방폐쇄-원칙openclose-principle)을 준수할 수 있다.
 
 
 

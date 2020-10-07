@@ -35,7 +35,7 @@
 
 
 
--   이전장의 [책임 연쇄 패턴](https://github.com/navill/Python_TIL/tree/master/200930#책임-연쇄-패턴): 메세지를 처리한 뒤 반환하는 객체가 무엇인지 알 수 없음	
+-   이전장의 [책임 연쇄 패턴](https://github.com/navill/Python_TIL/tree/master/2020/200930#책임-연쇄-패턴): 메세지를 처리한 뒤 반환하는 객체가 무엇인지 알 수 없음
 
     -   처리할 적절한 객체가 없을 경우 메서드는 None을 반환
 

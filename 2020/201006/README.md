@@ -292,7 +292,7 @@ print(c)  # <__main__.ClosedConnection object at 0x7fa0dc27b588>
 
         -   methodcaller를 이용한 Point객체 정렬
 
-    -   메서드에 주어질 파라미터를 고장하는 기능을 구현할 수 있다.
+    -   메서드에 주어질 파라미터를 고정하는 기능을 구현할 수 있다.
 
         ```python
         p = Point(3, 4)
