@@ -2,7 +2,9 @@
 
 - python을 공부하면서 작성한 코드를 기록한 저장소입니다.
 
+
 <br>
+
 - **[201007](https://github.com/navill/Python_TIL/tree/master/2020/201007):** 프로퍼티 메소드 중복 제거
 
 - **[201006](https://github.com/navill/Python_TIL/tree/master/2020/201006):** 상태 객체 혹은 상태 기계 구현, 문자열로 이루어진 객체의 메소드 호출
